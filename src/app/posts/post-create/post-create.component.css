@@ -1,0 +1,21 @@
+mat-form-field,
+textarea {
+  width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+.choose-file {
+  display: none;
+}
+
+.preview-img {
+  margin: 1rem 0;
+  height: 5rem;
+}
+
+.preview-img img {
+  max-height: 100%;
+}
