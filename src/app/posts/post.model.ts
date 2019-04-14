@@ -3,7 +3,7 @@ export interface Post {
   title: string;
   content: string;
   imagePath: string;
-  // publisher?: string;
+  creator: string;
   // updated_date?: { type: Date, default: Date.now },
   // voteAmount: number;
 }

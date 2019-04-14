@@ -10,7 +10,8 @@ import {
   MatToolbarModule,
   MatExpansionModule,
   MatProgressSpinnerModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDialogModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -21,6 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './start/login/login.component';
 import { RegistrationComponent } from './start/registration/registration.component';
 import { UserInterceptor } from './start/user-interceptor';
+import { MisstepInterceptor } from './misstep-interceptor';
+import { MisstepComponent } from './misstep/misstep.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { UserInterceptor } from './start/user-interceptor';
     HeaderComponent,
     PostListComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    MisstepComponent
   ],
   imports: [
     BrowserModule,
@@ -43,12 +47,15 @@ import { UserInterceptor } from './start/user-interceptor';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
+    MatDialogModule,
     MatExpansionModule,
     HttpClientModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UserInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: UserInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: MisstepInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MisstepComponent]
 })
 export class AppModule { }

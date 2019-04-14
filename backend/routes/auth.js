@@ -12,12 +12,12 @@ router.post("/register", (req, res, next) => {
     });
     member.save().then(result => {
       res.status(201).json({
-        message: 'User created!',
+        message: 'Konto zostało utworzone!',
         result: result
       });
     }).catch(err => {
       res.status(500).json({
-        error: err
+          message: 'Adres e-mail jest już zarejestrowany'
       });
     });
   });
@@ -43,12 +43,14 @@ router.post("/login", (req, res, next) => {
       }
       const token = jsonWT.sign({
         email: addedMember.email,
-        id: addedMember._id
+        memberId: addedMember._id
       }, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkthdGFyenluYSBTb2JjenlrIiwiaWF0IjoxNTE2MjM5MDIyfQ.RJ9XWKhqL6iztX-mzZcE6-9y3oi10-P0VNGA2a8JD18', {
-        expiresIn: '59m'
+        expiresIn: '1h'
       });
       res.status(200).json({
-          token: token
+        token: token,
+        expiresIn: 3600,
+        memberId: addedMember._id
       });
     })
     .catch(err => {

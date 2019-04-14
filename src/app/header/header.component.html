@@ -9,7 +9,7 @@
       <a mat-button routerLink='/login' routerLinkActive="mat-accent">Login</a>
     </li>
     <li *ngIf="existUser">
-      <button mat-button>Logout</button>
+      <button mat-button (click)="onLogoff()">Logout</button>
     </li>
     <li *ngIf="!existUser">
       <a mat-button routerLink='/register' routerLinkActive="mat-accent">Sign up</a>
