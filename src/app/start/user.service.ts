@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { UserData } from './user-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from "src/environments/environment";
 
+const API_URL = environment.apiUrl + '/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,7 @@ export class UserService {
   private isLoggedUser = false;
   // private timeExpire: NodeJS.Timer;
   private timeExpire: any;
-  private id: string;
+  private memberId: string;
 
   constructor(private router: Router, private httpClient: HttpClient) { }
 
@@ -29,18 +31,22 @@ export class UserService {
     return this.isLoggedUser;
   }
 
+  getMemberId() {
+    return this.memberId;
+  }
+
   createMember(email: string, password: string) {
     const memberData: UserData = { email: email, password: password };
-    this.httpClient.post('http://localhost:3000/api/user/register', memberData).subscribe(() => {
-      this.router.navigate['/'];
+    this.httpClient.post(API_URL + '/register', memberData).subscribe(() => {
+      this.router.navigate(['/']);
     }, err => {
       this.logStatus.next(false);
-    }); 
+    });
   }
 
   loginMember(email: string, password: string) {
     const memberData: UserData = { email: email, password: password };
-    this.httpClient.post<{ token: string, expiresIn: number, memberId: string }>('http://localhost:3000/api/user/login', memberData).subscribe(res => {
+    this.httpClient.post<{ token: string, expiresIn: number, memberId: string }>(API_URL + '/login', memberData).subscribe(res => {
       const token = res.token;
       this.jwt = token;
       if (token) {
@@ -48,25 +54,25 @@ export class UserService {
         // console.log(duration)
         this.setDuration(duration);
         this.isLoggedUser = true;
-        this.id = res.memberId;
+        this.memberId = res.memberId;
         this.logStatus.next(true);
         const time = new Date();
         const expDate = new Date(time.getTime() + duration * 1000);
         console.log(expDate)
-        this.sessionStorage(token, expDate, this.id);
+        this.sessionStorage(token, expDate, this.memberId);
         this.router.navigate(['/']);
       }
     }, err => {
       this.logStatus.next(false);
     });
   }
-  
+
 
   disconecctMember() {
-    this.isLoggedUser = false;
     this.jwt = null;
+    this.isLoggedUser = false;
     this.logStatus.next(false);
-    this.id = null;
+    this.memberId = null;
     clearTimeout(this.timeExpire);
     this.removeSession();
     this.router.navigate(['/']);
@@ -84,7 +90,7 @@ export class UserService {
     if (timeToExpire > 0) {
       this.jwt = userInfo.token;
       this.isLoggedUser = true;
-      this.id = userInfo.memberId;
+      this.memberId = userInfo.memberId;
       this.setDuration(timeToExpire / 1000);
       this.logStatus.next(true);
     }
@@ -111,7 +117,7 @@ export class UserService {
     }, timer * 1000);
   }
 
-  private sessionStorage(token: string, expirationDate: Date, memberId: string ) {
+  private sessionStorage(token: string, expirationDate: Date, memberId: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('memberId', memberId);
@@ -121,9 +127,5 @@ export class UserService {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('memberId');
-  }
-
-  getMemberId(){
-    return this.id;
   }
 }

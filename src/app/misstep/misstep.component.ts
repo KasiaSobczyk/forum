@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
+  selector: 'app-misstep',
   templateUrl: './misstep.component.html',
   styleUrls: ['./misstep.component.css']
 })

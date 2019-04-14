@@ -11,9 +11,9 @@ export class RouteGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
         const isLogged = this.userService.getAuth();
         if (!isLogged) {
-            this.router.navigate(['/']);
+            this.router.navigate(['/user/login']);
         }
-        return true;
+        return isLogged;
     }
 
 }

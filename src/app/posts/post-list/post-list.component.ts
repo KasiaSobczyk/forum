@@ -19,7 +19,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   postAmount = 0;
   postsPerPage = 2;
   pageSizeOptions = [1, 2, 5, 10];
-  memberId;
+  memberId: string;
   private postsSub: Subscription;
   private userStatus: Subscription;
 
@@ -37,7 +37,10 @@ export class PostListComponent implements OnInit, OnDestroy {
       });
     this.loggedUser = this.userService.getAuth();
     this.userStatus = this.userService.getStatus().subscribe(isLogin => {
+      // console.log("Login " + isLogin);
       this.loggedUser = isLogin;
+      this.memberId = this.userService.getMemberId();
+      // console.log("Id " +this.memberId);
     });
   }
 

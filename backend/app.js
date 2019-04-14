@@ -8,7 +8,7 @@ const authentication = require("./routes/auth");
 
 mongoose
   .connect(
-    "mongodb+srv://Kasia:DqEFvnXX61DtMD99@cluster0-7v7vn.mongodb.net/node-angular"
+    "mongodb+srv://Kasia:" + process.env.MONGO_PASSWORD + "@cluster0-7v7vn.mongodb.net/node-angular"
   )
   .then(() => {
     console.log("Connected to database!");

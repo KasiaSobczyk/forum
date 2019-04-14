@@ -4,11 +4,12 @@ import { throwError } from "rxjs";
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { MisstepComponent } from "./misstep/misstep.component";
+import { MisstepService } from "./misstep/misstep.service";
 
 @Injectable()
 export class MisstepInterceptor implements HttpInterceptor {
 
-    constructor(private modal: MatDialog) { }
+    constructor(private misstepService: MisstepService ,private modal: MatDialog) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         return next.handle(req).pipe(
