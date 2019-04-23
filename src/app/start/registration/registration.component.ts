@@ -28,7 +28,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       return;
     }
     this.loader = true;
-    this.userService.createMember(form.value.email, form.value.password);
+    this.userService.createMember(form.value.email, form.value.password, form.value.username);
   }
 
   ngOnDestroy() {

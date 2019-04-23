@@ -10,12 +10,14 @@ import { MisstepInterceptor } from './misstep-interceptor';
 import { MisstepComponent } from './misstep/misstep.component';
 import { MaterialDesignModule } from './material-design.module';
 import { PostModule } from './posts/post.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    MisstepComponent
+    MisstepComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,18 +1,24 @@
 <mat-toolbar color="primary">
-  <span><a routerLink="/" routerLinkActive="router-link-active">myMessages</a></span>
+  <span><a routerLink="/" routerLinkActive="router-link-active">myForum</a></span>
+  <li class="actuality">
+    <a mat-button routerLink='/home' routerLinkActive="mat-accent">Aktualności</a>
+  </li>
   <span class="space"></span>
   <ul>
     <li *ngIf="existUser">
-      <a mat-button routerLink='/create' routerLinkActive="mat-accent">Add post</a>
+      <a mat-button routerLink='/create' routerLinkActive="mat-accent">Dodaj post</a>
     </li>
     <li *ngIf="!existUser">
-      <a mat-button routerLink='/user/login' routerLinkActive="mat-accent">Login</a>
+      <a mat-button routerLink='/user/login' routerLinkActive="mat-accent">Zaloguj</a>
     </li>
     <li *ngIf="existUser">
-      <button mat-button (click)="onLogoff()">Logout</button>
+      <button mat-button (click)="onLogoff()">Wyloguj się</button>
     </li>
     <li *ngIf="!existUser">
-      <a mat-button routerLink='/user/register' routerLinkActive="mat-accent">Sign up</a>
+      <a mat-button routerLink='/user/register' routerLinkActive="mat-accent">Zarejestruj się</a>
+    </li>
+    <li *ngIf="existUser"> 
+        {{ this.username }}
     </li>
   </ul>
 </mat-toolbar>

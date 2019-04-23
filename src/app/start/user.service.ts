@@ -16,6 +16,7 @@ export class UserService {
   // private timeExpire: NodeJS.Timer;
   private timeExpire: any;
   private memberId: string;
+  private username: string;
 
   constructor(private router: Router, private httpClient: HttpClient) { }
 
@@ -35,8 +36,12 @@ export class UserService {
     return this.memberId;
   }
 
-  createMember(email: string, password: string) {
-    const memberData: UserData = { email: email, password: password };
+  getUserName() {
+    return this.username;
+  }
+
+  createMember(email: string, password: string, username: string) {
+    const memberData: UserData = { email: email, password: password, username: username };
     this.httpClient.post(API_URL + '/register', memberData).subscribe(() => {
       this.router.navigate(['/']);
     }, err => {
@@ -46,7 +51,7 @@ export class UserService {
 
   loginMember(email: string, password: string) {
     const memberData: UserData = { email: email, password: password };
-    this.httpClient.post<{ token: string, expiresIn: number, memberId: string }>(API_URL + '/login', memberData).subscribe(res => {
+    this.httpClient.post<{ token: string, expiresIn: number, memberId: string, username: string }>(API_URL + '/login', memberData).subscribe(res => {
       const token = res.token;
       this.jwt = token;
       if (token) {
@@ -55,6 +60,8 @@ export class UserService {
         this.setDuration(duration);
         this.isLoggedUser = true;
         this.memberId = res.memberId;
+        this.username = res.username;
+        console.log("username " + this.username);
         this.logStatus.next(true);
         const time = new Date();
         const expDate = new Date(time.getTime() + duration * 1000);
@@ -91,6 +98,7 @@ export class UserService {
       this.jwt = userInfo.token;
       this.isLoggedUser = true;
       this.memberId = userInfo.memberId;
+      this.username = userInfo.username;
       this.setDuration(timeToExpire / 1000);
       this.logStatus.next(true);
     }
@@ -100,6 +108,7 @@ export class UserService {
     const expirationDate = localStorage.getItem('expiration');
     const token = localStorage.getItem('token');
     const memberId = localStorage.getItem('memberId');
+    const username = localStorage.getItem('username');
 
     if (!token || !expirationDate) {
       return;
@@ -107,7 +116,8 @@ export class UserService {
     return {
       token: token,
       expirationDate: new Date(expirationDate),
-      memberId: memberId
+      memberId: memberId,
+      username: username
     }
   }
 
@@ -121,11 +131,13 @@ export class UserService {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('memberId', memberId);
+    localStorage.setItem('username', this.username);
   }
 
   private removeSession() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('memberId');
+    localStorage.removeItem('username');
   }
 }

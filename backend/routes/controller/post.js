@@ -6,9 +6,12 @@ exports.createPost = (req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     imagePath: url + "/images/" + req.file.filename,
-    creator: req.memberData.memberId
+    creator: req.memberData.memberId,
+    username: req.memberData.username
   });
+  console.log("id " +  req.memberData.memberId + "user " + req.memberData.username)
   post.save().then(createdPost => {
+    console.log("created " + createdPost);
     res.status(201).json({
       message: "Post added successfully",
       post: {
@@ -74,7 +77,8 @@ exports.updatePost = (req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     imagePath: imagePath,
-    creator: req.memberData.memberId
+    creator: req.memberData.memberId,
+    username: req.memberData.username
   });
   // console.log(post);
   Post.updateOne({

@@ -7,12 +7,16 @@
       <input #lastName="ngModel" name="lastName" matInput ngModel type="text" placeholder="Podaj nazwisko">
     </mat-form-field>
     <mat-form-field>
-      <input #email="ngModel" name="email" matInput ngModel type="email" placeholder="Podaj email" email required>
+      <input #email="ngModel" name="email" matInput ngModel type="email" autocomplete="off" placeholder="Podaj email" email required>
       <mat-error *ngIf="email.invalid">Wprowadź prawidłowy email</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput ngModel #password="ngModel" name="password" type="password" placeholder="Wprowadź hasło" required>
+      <input matInput ngModel #password="ngModel" name="password" type="password" placeholder="Wprowadź hasło" autocomplete="off" required>
       <mat-error *ngIf="password.invalid">Wprowadź poprawne hasło</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input #username="ngModel" name="username" matInput ngModel type="text" autocomplete="off" placeholder="Nazwa użytkownika" username required>
+      <mat-error *ngIf="username.invalid">Wprowadź nazwę użytkownika</mat-error>
     </mat-form-field>
     <button mat-raised-button *ngIf="!loader" color="accent" type="submit">Zarejestruj</button>
   </form>

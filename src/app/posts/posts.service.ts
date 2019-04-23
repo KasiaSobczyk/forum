@@ -26,12 +26,14 @@ export class PostsService {
         map(postData => {
           return {
             posts: postData.posts.map(post => {
+              // console.log("creator " + post.creator + "name " + post.username);
               return {
                 title: post.title,
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
-                creator: post.creator
+                creator: post.creator,
+                username: post.username
               };
             }),
             maxPosts: postData.maxPosts
@@ -55,6 +57,7 @@ export class PostsService {
       content: string;
       imagePath: string;
       creator: string;
+      username: string;
     }>(API_URL + id);
   }
 
@@ -74,7 +77,7 @@ export class PostsService {
         postData
       )
       .subscribe(responseData => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       });
   }
 
@@ -92,12 +95,12 @@ export class PostsService {
       postData.append('content', content);
       postData.append('image', image, title);
     } else {
-      postData = { id: id, title: title, content: content, imagePath: image, creator: null };
+      postData = { id: id, title: title, content: content, imagePath: image, creator: null, username: null };
     }
     this.http
       .put(API_URL + id, postData)
       .subscribe(response => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       });
   }
 }

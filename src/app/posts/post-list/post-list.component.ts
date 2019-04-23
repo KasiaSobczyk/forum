@@ -20,8 +20,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   postsPerPage = 2;
   pageSizeOptions = [1, 2, 5, 10];
   memberId: string;
+  comments = false;
+  showForm = false;
   private postsSub: Subscription;
   private userStatus: Subscription;
+  username: string;
 
   constructor(public postsService: PostsService, private userService: UserService) { }
 
@@ -29,18 +32,20 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.loader = true;
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
     this.memberId = this.userService.getMemberId();
+    this.username = this.userService.getUserName();
+    // console.log("name " + this.username);
     this.postsSub = this.postsService.getPostUpdateListener()
-      .subscribe((postData: { posts: Post[], postCount: number }) => {
-        this.loader = false;
-        this.postAmount = postData.postCount;
-        this.posts = postData.posts;
-      });
+    .subscribe((postData: { posts: Post[], postCount: number }) => {
+      this.loader = false;
+      this.postAmount = postData.postCount;
+      this.posts = postData.posts;
+    });
     this.loggedUser = this.userService.getAuth();
     this.userStatus = this.userService.getStatus().subscribe(isLogin => {
-      // console.log("Login " + isLogin);
       this.loggedUser = isLogin;
       this.memberId = this.userService.getMemberId();
-      // console.log("Id " +this.memberId);
+      this.username = this.userService.getUserName();
+      // console.log("name1 " + this.username);
     });
   }
 
@@ -63,5 +68,13 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
+  }
+
+  showComment() {
+    this.comments = !this.comments;
+  }
+
+  addComment() {
+    this.showForm = !this.showForm;
   }
 }

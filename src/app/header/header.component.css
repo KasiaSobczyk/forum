@@ -13,3 +13,11 @@ a {
 .space {
  flex: 1 1 auto;
 }
+
+li {
+  list-style: none;
+}
+
+.actuality {
+  margin-left: 1.5rem;
+}

@@ -54,7 +54,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.loader = true;
         this.postsService.getPost(this.postId).subscribe(postData => {
           this.loader = false;
-          this.post = { id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath, creator: postData.creator };
+          this.post = { id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath, creator: postData.creator, username: postData.username };
           this.form.setValue({ title: this.post.title, content: this.post.content, image: this.post.imagePath });
         });
       } else {

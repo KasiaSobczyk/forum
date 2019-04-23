@@ -6,7 +6,8 @@ exports.createMember = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
     const member = new Member({
       email: req.body.email,
-      password: hash
+      password: hash,
+      username: req.body.username
     });
     member.save().then(result => {
       res.status(201).json({
@@ -42,14 +43,16 @@ exports.loginMember = (req, res, next) => {
       }
       const token = jsonWT.sign({
         email: addedMember.email,
-        memberId: addedMember._id
+        memberId: addedMember._id,
+        username: addedMember.username
         }, process.env.WEB_TOKEN,
         { expiresIn: '1h'}
         );
       res.status(200).json({
         token: token,
         expiresIn: 3600,
-        memberId: addedMember._id
+        memberId: addedMember._id,
+        username: addedMember.username
       });
     })
     .catch(err => {

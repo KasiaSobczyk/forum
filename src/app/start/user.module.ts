@@ -9,7 +9,7 @@ import { UserRoutingModule } from "./user-routing.module";
 @NgModule({
     declarations: [
         LoginComponent,
-        RegistrationComponent
+        RegistrationComponent,
     ],
     imports: [
         MaterialDesignModule,

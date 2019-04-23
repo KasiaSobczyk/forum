@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public existUser = false;
+  public username: string;
   private statusListener: Subscription;
 
   constructor(private userService: UserService) { }
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.existUser = this.userService.getAuth();
     this.statusListener = this.userService.getStatus().subscribe(auth => {
       this.existUser = auth;
+      this.username = this.userService.getUserName();
     });
   }
 

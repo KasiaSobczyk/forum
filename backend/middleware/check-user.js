@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = jsonWT.verify(token, process.env.WEB_TOKEN);
-    req.memberData = { email: decodedToken.email, memberId: decodedToken.memberId };
+    req.memberData = { email: decodedToken.email, memberId: decodedToken.memberId, username: decodedToken.username };
     next();
   } catch (error) {
     res.status(401).json({

@@ -19,3 +19,28 @@ mat-spinner {
 mat-paginator {
   margin-top: 1rem;
 }
+
+.example-header-image img {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 2rem;
+}
+
+.comment-form {}
+
+/* .mat-title {
+  margin-top: 3px;
+} */
+
+.like {
+  color: #20c420;
+}
+
+.dislike {
+  color: red;
+}
+
+.creator {
+  color: #272797;
+  margin-top: 0.5rem;
+}
