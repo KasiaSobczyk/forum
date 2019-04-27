@@ -16,4 +16,6 @@ router.get("/:id", Controllers.getOnePost);
 
 router.delete("/:id", checkUser, Controllers.removePost);
 
+// router.put("/", unpackContent, Controllers.likePost);
+
 module.exports = router;

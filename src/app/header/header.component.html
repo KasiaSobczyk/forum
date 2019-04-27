@@ -1,24 +1,26 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <span><a routerLink="/" routerLinkActive="router-link-active">myForum</a></span>
   <li class="actuality">
-    <a mat-button routerLink='/home' routerLinkActive="mat-accent">Aktualności</a>
+    <a mat-button routerLink='/home' routerLinkActive="active">Aktualności</a>
   </li>
   <span class="space"></span>
   <ul>
     <li *ngIf="existUser">
-      <a mat-button routerLink='/create' routerLinkActive="mat-accent">Dodaj post</a>
+      <a mat-button routerLink='/create' routerLinkActive="active">Dodaj post</a>
     </li>
     <li *ngIf="!existUser">
-      <a mat-button routerLink='/user/login' routerLinkActive="mat-accent">Zaloguj</a>
-    </li>
-    <li *ngIf="existUser">
-      <button mat-button (click)="onLogoff()">Wyloguj się</button>
+      <a mat-button routerLink='/user/login' routerLinkActive="active">Zaloguj</a>
     </li>
     <li *ngIf="!existUser">
-      <a mat-button routerLink='/user/register' routerLinkActive="mat-accent">Zarejestruj się</a>
+      <a mat-button routerLink='/user/register' routerLinkActive="active">Zarejestruj się</a>
     </li>
-    <li *ngIf="existUser"> 
+    <button *ngIf="existUser" mat-button [matMenuTriggerFor]="menu" style="color:aliceblue">
         {{ this.username }}
-    </li>
+      </button>
+    <mat-menu #menu="matMenu">
+      <li *ngIf="existUser">
+        <button mat-button (click)="onLogoff()">Wyloguj się</button>
+      </li>
+    </mat-menu>
   </ul>
 </mat-toolbar>

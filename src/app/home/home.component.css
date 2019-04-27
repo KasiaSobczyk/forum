@@ -1,0 +1,17 @@
+.card {
+    margin-top: 4rem !important;
+    text-align: center;
+    opacity: 0.9;
+    margin: 0 auto;
+    width: 90%;
+}
+
+p.admission {
+    margin-top: 1rem;
+}
+
+.title {
+    margin: 3rem 0;
+}
+
+

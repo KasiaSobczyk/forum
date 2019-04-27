@@ -117,3 +117,29 @@ exports.removePost =  (req, res, next) => {
       });
     });
   };
+
+  exports.likePost = (req, res, next) => {
+    // const likeArray = new Post({
+
+    // })
+    // // console.log(post);
+    // Post.updateOne({
+    //   _id: req.params.id,
+    //   creator: req.memberData.memberId
+    // }, likeArray).then(result => {
+    //   // console.log(result);
+    //   if (post.dislikedBy.includes(creator)) {
+    //     res.status(200).json({
+    //       message: "Update successful"
+    //     });
+    //   } else {
+    //     res.status(401).json({
+    //       message: "No authorized"
+    //     });
+    //   }
+    // }).catch(err => {
+    //   res.status(500).json({
+    //     message: 'Nie udało się zaktualizować treśći'
+    //   });
+    // });
+  };

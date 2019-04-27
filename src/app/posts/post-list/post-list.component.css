@@ -44,3 +44,8 @@ mat-paginator {
   color: #272797;
   margin-top: 0.5rem;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+}

@@ -10,8 +10,14 @@ a {
   color: aliceblue;
 }
 
+.active {
+  /* color: #fcfcfc; */
+  text-decoration: underline;
+  text-underline-position: under;
+}
+
 .space {
- flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 li {
@@ -20,4 +26,8 @@ li {
 
 .actuality {
   margin-left: 1.5rem;
+}
+
+mat-toolbar {
+  background-color: transparent
 }
