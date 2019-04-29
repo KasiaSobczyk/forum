@@ -77,4 +77,18 @@ export class PostListComponent implements OnInit, OnDestroy {
   addComment() {
     this.showForm = !this.showForm;
   }
+
+  likePost(postId: string) {
+    console.log("like");
+    this.postsService.likePost(postId).subscribe(() => {
+      this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    });
+  }
+
+  dislikePost(postId: string){
+    console.log("dislike")
+    // this.postsService.dislikePost(postId).subscribe(() => {
+    //   this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    // });
+  }
 }

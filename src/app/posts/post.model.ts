@@ -7,4 +7,6 @@ export interface Post {
   username: string;
   // updated_date?: { type: Date, default: Date.now },
   // voteAmount: number;
+  likes?: number;
+  dislikes?: number;
 }

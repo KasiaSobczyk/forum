@@ -7,7 +7,7 @@ import { Post } from "./post.model";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 
-const API_URL = environment.apiUrl +'/posts/';
+const API_URL = environment.apiUrl + '/posts/';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
@@ -102,5 +102,10 @@ export class PostsService {
       .subscribe(response => {
         this.router.navigate(['/home']);
       });
+  }
+
+  likePost(postId: string) {
+    let postData = { id: postId };
+    return this.http.put(API_URL + postId, postData);
   }
 }
