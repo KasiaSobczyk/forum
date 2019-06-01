@@ -9,7 +9,6 @@ const postSchema = mongoose.Schema({
   // creationDate: { type: Date, default: Date.now() },
   likes: { type: Number, default: 0 },
   likedBy: { type: Array },
-  dislikes: { type: Number, default: 0 },
   dislikedBy: { type: Array },
   comments: [{
     comment: { type: String },

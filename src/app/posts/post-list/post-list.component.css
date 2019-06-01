@@ -28,16 +28,27 @@ mat-paginator {
 
 .comment-form {}
 
-/* .mat-title {
-  margin-top: 3px;
-} */
-
-.like {
+.like:focus {
   color: #20c420;
 }
 
-.dislike {
+.dislike:focus {
   color: red;
+}
+
+.material-icons {
+  font-size: 30px;
+}
+
+.likesCount {
+  font-size: 18px;
+  margin: 0.6rem 1rem 0;
+}
+
+.buttons {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .creator {

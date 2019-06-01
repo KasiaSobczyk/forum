@@ -16,6 +16,9 @@ router.get("/:id", Controllers.getOnePost);
 
 router.delete("/:id", checkUser, Controllers.removePost);
 
-router.put("/like", unpackContent, Controllers.likePost);
+router.patch("/like/:id", Controllers.likePost);
+
+router.patch("/dislike/:id", Controllers.dislikePost);
+
 
 module.exports = router;

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
 import { UserService } from "src/app/start/user.service";
+import { post } from "selenium-webdriver/http";
 
 @Component({
   selector: "app-post-list",
@@ -25,6 +26,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private userStatus: Subscription;
   username: string;
+  likeNumber: number;
 
   constructor(public postsService: PostsService, private userService: UserService) { }
 
@@ -35,17 +37,19 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.username = this.userService.getUserName();
     // console.log("name " + this.username);
     this.postsSub = this.postsService.getPostUpdateListener()
-    .subscribe((postData: { posts: Post[], postCount: number }) => {
-      this.loader = false;
-      this.postAmount = postData.postCount;
-      this.posts = postData.posts;
-    });
+      .subscribe((postData: { posts: Post[], postCount: number }) => {
+        this.loader = false;
+        this.postAmount = postData.postCount;
+        this.posts = postData.posts;
+        // console.log(this.posts[0].likes);
+        this.likeNumber = this.posts[0].likes;
+      });  
     this.loggedUser = this.userService.getAuth();
     this.userStatus = this.userService.getStatus().subscribe(isLogin => {
       this.loggedUser = isLogin;
       this.memberId = this.userService.getMemberId();
       this.username = this.userService.getUserName();
-      // console.log("name1 " + this.username);
+      // console.log("name1 " + this.posts.likes);
     });
   }
 
@@ -79,16 +83,23 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   likePost(postId: string) {
-    console.log("like");
-    this.postsService.likePost(postId).subscribe(() => {
-      this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    // let like: number;
+    this.postsService.getPost(postId).subscribe(() => {
+      this.postsService.likePost(postId, this.likeNumber).subscribe(() => {
+        this.postsService.getPosts(this.postsPerPage, this.currentPage);
+      }, () => {
+        this.loader = false;
+      });
     });
   }
 
-  dislikePost(postId: string){
-    console.log("dislike")
-    // this.postsService.dislikePost(postId).subscribe(() => {
-    //   this.postsService.getPosts(this.postsPerPage, this.currentPage);
-    // });
+  dislikePost(postId: string) {
+    this.postsService.getPost(postId).subscribe(() => {
+      this.postsService.dislikePost(postId, this.likeNumber).subscribe(() => {
+        this.postsService.getPosts(this.postsPerPage, this.currentPage);
+      }, () => {
+        this.loader = false;
+      });
+    });
   }
 }

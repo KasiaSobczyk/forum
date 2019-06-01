@@ -9,7 +9,7 @@ exports.createPost = (req, res, next) => {
     creator: req.memberData.memberId,
     username: req.memberData.username
   });
-  console.log("id " + req.memberData.memberId + "user " + req.memberData.username)
+  // console.log("id " + req.memberData.memberId + "user " + req.memberData.username)
   post.save().then(createdPost => {
     console.log("created " + createdPost);
     res.status(201).json({
@@ -82,7 +82,7 @@ exports.updatePost = (req, res, next) => {
     creator: req.memberData.memberId,
     username: req.memberData.username
   });
-  // console.log(post);
+  // console.log("post",post);
   Post.updateOne({
     _id: req.params.id,
     creator: req.memberData.memberId
@@ -109,7 +109,7 @@ exports.removePost = (req, res, next) => {
     _id: req.params.id,
     creator: req.memberData.memberId
   }).then(result => {
-    // console.log(result);
+    console.log("res  ",result);
     // res.status(200).json({ message: "Post deleted!" });
     if (result.n > 0) {
       res.status(200).json({
@@ -128,62 +128,31 @@ exports.removePost = (req, res, next) => {
 };
 
 exports.likePost = (req, res, next) => {
-  let imagePath = req.body.imagePath;
-  if (req.file) {
-    const url = req.protocol + "://" + req.get("host");
-    imagePath = url + "/images/" + req.file.filename;
-  }
-  const post = new Post({
-    _id: req.body.id,
-    title: req.body.title,
-    content: req.body.content,
-    imagePath: imagePath,
-    creator: req.memberData.memberId,
-    username: req.memberData.username,
-    // likes: [],
-    // likedBy: req.body.likedBy,
-    // dislikes: [],
-    // dislikedBy: req.body.dislikedBy
+  const id = req.params.id;
+  let like = req.body.likes;
+  like += 1;
+  // console.log("like  ", like)
+  Post.update({_id: id}, {$set: { likes: like }})
+  .then(result => {
+    res.status(200).json(result);
+  }).catch(err => {
+    res.status(500).json({
+      message: 'Nie udało się zaktualizować treśći'
+    });
   });
-  Post.updateOne({
-    _id: req.params.id,
-    likedBy: req.params.likedBy
-  }, post).then(result => {
-    if (post.dislikedBy.includes(memberData.username)) {
-      post.dislikes--;
-      const arrayIndex = post.dislikedBy.indexOf(user.username);
-      post.dislikedBy.splice(arrayIndex, 1);
-      post.likes++;
-      post.likedBy.push(memberData.username);
-      post.save((err) => {
-        if (err) {
-          res.status(401).json({
-            message: "No authorized"
-          });
-        } else {
-          res.status(200).json({
-            message: "Update successful"
-          });
-        }
-      });
-    } else {
-      post.likedBy.push(memberData.username);
-      post.likes++;
-      post.save((err) => {
-        if (err) {
-          res.status(401).json({
-            message: "No authorized"
-          });
-        } else {
-          res.status(200).json({
-            message: "Update successful"
-          });
-        }
-      }).catch(err => {
-        res.status(500).json({
-          message: 'Nie udało się zaktualizować treśći'
-        });
-      });
-    };
+};
+
+exports.dislikePost = (req, res, next) => {
+  const id = req.params.id;
+  let like = req.body.likes;
+  like -= 1;
+  // console.log("dislike  ", like)
+  Post.update({_id: id}, {$set: { likes: like }})
+  .then(result => {
+    res.status(200).json(result);
+  }).catch(err => {
+    res.status(500).json({
+      message: 'Nie udało się zaktualizować treśći'
+    });
   });
 };

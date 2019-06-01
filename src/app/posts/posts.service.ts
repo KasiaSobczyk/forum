@@ -13,6 +13,7 @@ const API_URL = environment.apiUrl + '/posts/';
 export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[], postCount: number }>();
+  private likeNumber = new Subject<{ likes: number }>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -26,14 +27,16 @@ export class PostsService {
         map(postData => {
           return {
             posts: postData.posts.map(post => {
-              // console.log("creator " + post.creator + "name " + post.username);
+              this.likeNumber = post.likes;
               return {
                 title: post.title,
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
                 creator: post.creator,
-                username: post.username
+                username: post.username,
+                likes: post.likes,
+                dislikes: post.likes
               };
             }),
             maxPosts: postData.maxPosts
@@ -58,7 +61,13 @@ export class PostsService {
       imagePath: string;
       creator: string;
       username: string;
+      likes: number;
+      dislikes: number;
     }>(API_URL + id);
+  }
+
+  getNumberLike() {
+    return this.likeNumber.asObservable();
   }
 
   getPostUpdateListener() {
@@ -104,8 +113,13 @@ export class PostsService {
       });
   }
 
-  likePost(postId: string) {
-    let postData = { id: postId };
-    return this.http.put(API_URL + postId, postData);
+  likePost(postId: string, likes: number) {
+    const postData = { id: postId, likes: likes};
+    return this.http.patch(API_URL + 'like/'+ postId, postData);
+  }
+
+  dislikePost(postId: string, likes: number) {
+    const postData = { id: postId, likes: likes};
+    return this.http.patch(API_URL + 'dislike/' + postId, postData);
   }
 }

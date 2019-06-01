@@ -19,8 +19,15 @@
       <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
     </mat-action-row>
     <mat-card-actions *ngIf="memberId !== post.creator" style="display: flex; justify-content: flex-end">
-      <button mat-button class="like" (click)="likePost(post.id)">LIKE</button>
-      <button mat-button class="dislike" (click)="dislikePost(post.id)">DISLIKE</button>
+      <div class="buttons">
+        <button mat-icon-button class="like" (click)="likePost(post.id)">
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+        <button mat-icon-button class="dislike" (click)="dislikePost(post.id)">
+          <mat-icon>thumb_down</mat-icon>
+        </button>
+        <div class="likesCount">{{ post.likes }}</div>
+      </div>
     </mat-card-actions>
     <button mat-button (click)="showComment()">Pokaż komentarze</button>
     <button mat-button (click)="addComment()">Dodaj komentarz</button>

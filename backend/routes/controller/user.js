@@ -38,7 +38,7 @@ exports.loginMember = (req, res, next) => {
     }).then(result => {
       if (!result) {
         return res.status(401).json({
-          message: 'User doesnt exist'
+          message: 'Nieprawidłowe hasło! Spróbuj jeszcze raz'
         });
       }
       const token = jsonWT.sign({

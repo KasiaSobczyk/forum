@@ -43,7 +43,7 @@ export class UserService {
   createMember(email: string, password: string, username: string) {
     const memberData: UserData = { email: email, password: password, username: username };
     this.httpClient.post(API_URL + '/register', memberData).subscribe(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
     }, err => {
       this.logStatus.next(false);
     });
@@ -67,13 +67,12 @@ export class UserService {
         const expDate = new Date(time.getTime() + duration * 1000);
         console.log(expDate)
         this.sessionStorage(token, expDate, this.memberId);
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       }
     }, err => {
       this.logStatus.next(false);
     });
   }
-
 
   disconecctMember() {
     this.jwt = null;
