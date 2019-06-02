@@ -120,11 +120,12 @@ export class PostsService {
     return this.http.patch(API_URL + 'dislike/' + postId, postData);
   }
 
-  addComment(id: string, comment: string) {
+  addComment(id: string, comment: string, commentator: string) {
     // console.log("addComment")
     const postData = {
       id: id,
-      comment: comment
+      comment: comment,
+      commentator: commentator
     }
     return this.http.patch(API_URL + 'comment/' + id, postData);
   }

@@ -31,7 +31,9 @@ mat-paginator {
   margin-right: 2rem;
 }
 
-.comment-form {}
+:host ::ng-deep mat-card-title {
+  font-size: 18px;
+}
 
 .like:focus {
   color: #20c420;

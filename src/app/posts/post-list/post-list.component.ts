@@ -102,10 +102,10 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.loader = true;
     // console.log("id  ",postId)
     this.postsService.getPost(postId).subscribe(() => {
-      this.postsService.addComment(postId, this.form.value.comment).subscribe(() => {
+      this.postsService.addComment(postId, this.form.value.comment, this.username).subscribe(() => {
         this.form.reset();
-        this.postsService.getPosts(this.postsPerPage, this.currentPage);
-      }, () => {
+        this.addComment(postId);
+        this.showComment(postId);
         this.loader = false;
       });
     });

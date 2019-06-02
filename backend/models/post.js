@@ -12,7 +12,7 @@ const postSchema = mongoose.Schema({
   dislikedBy: { type: Array },
   comments: [{
     comment: { type: String, required: true },
-    commentator: { type: String }
+    commentator: { type: String, ref: 'User', required: true }
   }]
 });
 
