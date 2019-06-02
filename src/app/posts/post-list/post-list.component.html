@@ -29,40 +29,38 @@
         <div class="likesCount">{{ post.likes }}</div>
       </div>
     </mat-card-actions>
-    <button mat-button (click)="showComment()">Pokaż komentarze</button>
-    <button mat-button (click)="addComment()">Dodaj komentarz</button>
+    <button mat-button (click)="showComment(post.id)">Pokaż komentarze</button>
+    <button mat-button (click)="addComment(post.id)">Dodaj komentarz</button>
     <br>
-    <mat-card class="comment-group" *ngIf="comments">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-          bred for hunting.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>DISLIKE</button>
-      </mat-card-actions>
-    </mat-card>
-    <mat-card class="commmnt-form" *ngIf="showForm">
-      <form (submit)="onSavePost(postForm)" [formGroup]="form">
-        <mat-form-field>
-          <input matInput type="text" formControlName="title" placeholder="Tytuł">
-          <mat-error>Wprowadź tytuł</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <textarea matInput rows="4" formControlName="content" placeholder="Odpowiedź"></textarea>
-          <mat-error>Wprowadź treść</mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="accent" type="submit">Dodaj komentarz</button>
-      </form>
-    </mat-card>
+    <div *ngIf="showComments[0] === post.id">
+      <mat-card class="comment-group" *ngFor="let com of post.comments">
+        <mat-card-header >
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{ com.commentator }}</mat-card-title>
+          <mat-card-subtitle>Odp do {{ post.title }} </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{ com.comment }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>DISLIKE</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div *ngIf="addNewComment[0] === post.id">
+      <mat-card class="commmnt-form">
+        <form (submit)="onComment(post.id)" [formGroup]="form">
+          <mat-form-field>
+            <textarea matInput rows="4" formControlName="comment" placeholder="Odpowiedź"></textarea>
+            <mat-error>Wprowadź treść</mat-error>
+          </mat-form-field>
+          <button mat-raised-button color="accent" type="submit">Dodaj komentarz</button>
+        </form>
+      </mat-card>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>
 <mat-paginator *ngIf="posts.length > 0" [length]="postAmount" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangePage($event)">

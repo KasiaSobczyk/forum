@@ -146,13 +146,32 @@ exports.dislikePost = (req, res, next) => {
   const id = req.params.id;
   let like = req.body.likes;
   like -= 1;
-  // console.log("dislike  ", like)
   Post.update({_id: id}, {$set: { likes: like }})
   .then(result => {
     res.status(200).json(result);
   }).catch(err => {
     res.status(500).json({
       message: 'Nie udało się zaktualizować treśći'
+    });
+  });
+};
+
+exports.commentPost = (req, res, next) => {
+  const id = req.params.id;
+  comments =  {
+    comment: req.body.comment,
+    creator: req.memberData.username
+  };
+  console.log("id  ", id)
+  Post.update({_id: id}, {$push: { comments: comments}})
+  // Post.update({_id: id}, {$push: { comments: {"comment": req.body.comment, "commentator": req.memberData.username}}})
+  .then(result => {
+    console.log(result)
+    res.status(200).json(result);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({
+      message: 'Nie udało się dodać komentarza'
     });
   });
 };

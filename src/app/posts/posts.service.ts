@@ -13,7 +13,7 @@ const API_URL = environment.apiUrl + '/posts/';
 export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[], postCount: number }>();
-  private likeNumber = new Subject<{ likes: number }>();
+  private likeNumber: number;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -36,7 +36,8 @@ export class PostsService {
                 creator: post.creator,
                 username: post.username,
                 likes: post.likes,
-                dislikes: post.likes
+                dislikes: post.likes,
+                comments: post.comments
               };
             }),
             maxPosts: postData.maxPosts
@@ -62,12 +63,8 @@ export class PostsService {
       creator: string;
       username: string;
       likes: number;
-      dislikes: number;
+      comments: [];
     }>(API_URL + id);
-  }
-
-  getNumberLike() {
-    return this.likeNumber.asObservable();
   }
 
   getPostUpdateListener() {
@@ -114,12 +111,21 @@ export class PostsService {
   }
 
   likePost(postId: string, likes: number) {
-    const postData = { id: postId, likes: likes};
-    return this.http.patch(API_URL + 'like/'+ postId, postData);
+    const postData = { id: postId, likes: likes };
+    return this.http.patch(API_URL + 'like/' + postId, postData);
   }
 
   dislikePost(postId: string, likes: number) {
-    const postData = { id: postId, likes: likes};
+    const postData = { id: postId, likes: likes };
     return this.http.patch(API_URL + 'dislike/' + postId, postData);
+  }
+
+  addComment(id: string, comment: string) {
+    // console.log("addComment")
+    const postData = {
+      id: id,
+      comment: comment
+    }
+    return this.http.patch(API_URL + 'comment/' + id, postData);
   }
 }

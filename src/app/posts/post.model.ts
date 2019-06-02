@@ -7,4 +7,8 @@ export interface Post {
   username: string;
   // updated_date?: { type: Date, default: Date.now },
   likes?: number;
+  comments?: [{
+    comment: string;
+    commentator: string;
+  }]
 }

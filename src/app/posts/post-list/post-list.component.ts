@@ -6,6 +6,7 @@ import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
 import { UserService } from "src/app/start/user.service";
 import { post } from "selenium-webdriver/http";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-post-list",
@@ -27,7 +28,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   private userStatus: Subscription;
   username: string;
   likeNumber: number;
-
+  form: FormGroup;
+  showComments = [];
+  addNewComment = [];
+  
   constructor(public postsService: PostsService, private userService: UserService) { }
 
   ngOnInit() {
@@ -35,13 +39,15 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
     this.memberId = this.userService.getMemberId();
     this.username = this.userService.getUserName();
-    // console.log("name " + this.username);
+    this.form = new FormGroup({
+      comment: new FormControl(null, {
+        validators: [Validators.required]
+      }) });
     this.postsSub = this.postsService.getPostUpdateListener()
       .subscribe((postData: { posts: Post[], postCount: number }) => {
         this.loader = false;
         this.postAmount = postData.postCount;
         this.posts = postData.posts;
-        // console.log(this.posts[0].likes);
         this.likeNumber = this.posts[0].likes;
       });  
     this.loggedUser = this.userService.getAuth();
@@ -49,7 +55,6 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.loggedUser = isLogin;
       this.memberId = this.userService.getMemberId();
       this.username = this.userService.getUserName();
-      // console.log("name1 " + this.posts.likes);
     });
   }
 
@@ -74,12 +79,36 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
   }
 
-  showComment() {
-    this.comments = !this.comments;
+  showComment(id) {
+    if(this.showComments.includes(id)) {
+      this.showComments.splice(this.showComments.indexOf(id), 1) ;
+    } else {
+      this.showComments.push(id);
+    }
   }
 
-  addComment() {
-    this.showForm = !this.showForm;
+  addComment(id) {
+    if(this.addNewComment.includes(id)) {
+      this.addNewComment.splice(this.addNewComment.indexOf(id), 1) ;
+    } else {
+      this.addNewComment.push(id);
+    }
+  }
+ 
+  onComment(postId: string){
+    if (this.form.invalid) {
+      return;
+    }
+    this.loader = true;
+    // console.log("id  ",postId)
+    this.postsService.getPost(postId).subscribe(() => {
+      this.postsService.addComment(postId, this.form.value.comment).subscribe(() => {
+        this.form.reset();
+        this.postsService.getPosts(this.postsPerPage, this.currentPage);
+      }, () => {
+        this.loader = false;
+      });
+    });
   }
 
   likePost(postId: string) {

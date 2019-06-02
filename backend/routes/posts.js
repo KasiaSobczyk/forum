@@ -20,5 +20,7 @@ router.patch("/like/:id", Controllers.likePost);
 
 router.patch("/dislike/:id", Controllers.dislikePost);
 
+router.patch("/comment/:id", checkUser, Controllers.commentPost);
+
 
 module.exports = router;

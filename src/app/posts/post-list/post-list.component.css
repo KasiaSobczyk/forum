@@ -11,6 +11,11 @@ mat-spinner {
   margin: auto;
 }
 
+mat-expansion-panel {
+  /* width: 85%;
+  margin: 0 auto; */
+}
+
 .attachment img {
   width: 100%;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, .5)
