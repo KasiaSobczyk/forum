@@ -34,10 +34,12 @@
     <button mat-button (click)="addComment(post.id)" *ngIf="loggedUser">Dodaj komentarz</button>
     <br>
     <div *ngIf="showComments[0] === post.id">
-        <p class="info-text mat-body-1" *ngIf="post.comments.length <= 0">Brak komentarzy</p>
+      <!-- nie pokazuje się gdy w innym są otwarte-->
+      <p class="info-text mat-body-1" *ngIf="post.comments.length <= 0">Brak komentarzy</p> 
+
       <mat-card class="comment-group" *ngFor="let com of post.comments">
         <mat-card-header >
-          <div mat-card-avatar class="example-header-image"></div>
+          <div mat-card-avatar class="example-header-image"><img src="../assets/avatars/no-phto.png" alt=""></div>
           <mat-card-title>{{ com.commentator }}</mat-card-title>
           <mat-card-subtitle>Odp do {{ post.title }} </mat-card-subtitle>
         </mat-card-header>
