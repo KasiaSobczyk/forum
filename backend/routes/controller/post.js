@@ -58,7 +58,7 @@ exports.getOnePost = (req, res, next) => {
       res.status(200).json(post);
     } else {
       res.status(404).json({
-        message: "Post not found!"
+        message: "Podany wpis nie istnieje!"
       });
     }
   }).catch(err => {

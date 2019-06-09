@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   public existUser = false;
   public username: string;
+  public userId: string;
   private statusListener: Subscription;
 
   constructor(private userService: UserService) { }
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.username = this.userService.getUserName();
     this.existUser = this.userService.getAuth();
+    this.userId = this.userService.getMemberId();
     this.statusListener = this.userService.getStatus().subscribe(auth => {
       this.existUser = auth;
       this.username = this.userService.getUserName();

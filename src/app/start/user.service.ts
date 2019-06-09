@@ -103,6 +103,16 @@ export class UserService {
     }
   }
 
+  getUserInfo(id: string) {
+    return this.httpClient.get<{
+      _id: string;
+      firstName: string;
+      lastName: string;
+      username: string;
+      email: string
+    }>(API_URL + '/' + id);
+  }
+
   private getUserData() {
     const expirationDate = localStorage.getItem('expiration');
     const token = localStorage.getItem('token');

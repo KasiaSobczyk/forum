@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
 import { UserService } from "src/app/start/user.service";
-import { post } from "selenium-webdriver/http";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 @Component({

@@ -9,7 +9,8 @@ import {
     MatPaginatorModule,
     MatDialogModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -19,6 +20,7 @@ import {
         MatPaginatorModule,
         MatCardModule,
         MatButtonModule,
+        MatTooltipModule,
         MatToolbarModule,
         MatDialogModule,
         MatExpansionModule,

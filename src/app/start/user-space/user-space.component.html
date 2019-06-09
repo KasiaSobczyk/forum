@@ -1,0 +1,14 @@
+<mat-card *ngIf="memberId">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"><img src="/assets/avatars/men.png" alt="" style="height: inherit"></div>
+    <mat-card-subtitle>Imię</mat-card-subtitle>
+    <mat-card-title>{{ this.firstName }}</mat-card-title>
+    <mat-card-subtitle>Nazwisko</mat-card-subtitle>
+    <mat-card-title>{{ this.lastName }}</mat-card-title>
+    <mat-card-subtitle>Email</mat-card-subtitle>
+    <mat-card-title>{{ this.email }}</mat-card-title>
+    <mat-card-subtitle>Nazwa użytkownika</mat-card-subtitle>
+    <mat-card-title>{{ this.username }}</mat-card-title>
+  </mat-card-header>
+</mat-card>
+<mat-spinner *ngIf="loader" style="margin: 0 auto;"></mat-spinner>
