@@ -7,7 +7,9 @@ exports.createMember = (req, res, next) => {
     const member = new Member({
       email: req.body.email,
       password: hash,
-      username: req.body.username
+      username: req.body.username,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
     });
     member.save().then(result => {
       res.status(201).json({
@@ -44,7 +46,9 @@ exports.loginMember = (req, res, next) => {
       const token = jsonWT.sign({
         email: addedMember.email,
         memberId: addedMember._id,
-        username: addedMember.username
+        username: addedMember.username,
+        firstName: addedMember.firstName,
+        lastName: addedMember.lastName
         }, process.env.WEB_TOKEN,
         { expiresIn: '1h'}
         );
@@ -52,7 +56,9 @@ exports.loginMember = (req, res, next) => {
         token: token,
         expiresIn: 3600,
         memberId: addedMember._id,
-        username: addedMember.username
+        username: addedMember.username,
+        firstName: addedMember.firstName,
+        lastName: addedMember.lastName
       });
     })
     .catch(err => {

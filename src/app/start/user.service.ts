@@ -40,10 +40,10 @@ export class UserService {
     return this.username;
   }
 
-  createMember(email: string, password: string, username: string) {
-    const memberData: UserData = { email: email, password: password, username: username };
+  createMember(email: string, password: string, username: string, firstName: string, lastName: string) {
+    const memberData: UserData = { email: email, password: password, username: username, firstName: firstName, lastName: lastName};
     this.httpClient.post(API_URL + '/register', memberData).subscribe(() => {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/user/login']);
     }, err => {
       this.logStatus.next(false);
     });
@@ -61,7 +61,7 @@ export class UserService {
         this.isLoggedUser = true;
         this.memberId = res.memberId;
         this.username = res.username;
-        console.log("username " + this.username);
+        // console.log("username " + this.username);
         this.logStatus.next(true);
         const time = new Date();
         const expDate = new Date(time.getTime() + duration * 1000);

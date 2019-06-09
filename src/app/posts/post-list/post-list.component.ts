@@ -27,7 +27,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private userStatus: Subscription;
   username: string;
-  likeNumber: number;
+  likeNumber: number = 0;
   form: FormGroup;
   showComments = [];
   addNewComment = [];

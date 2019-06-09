@@ -17,6 +17,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userStatus = this.userService.getStatus().subscribe(
       logStatus => {
+        // console.log("logStatus",logStatus)
         this.loader = false;
       }
     );
@@ -28,7 +29,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       return;
     }
     this.loader = true;
-    this.userService.createMember(form.value.email, form.value.password, form.value.username);
+    this.userService.createMember(form.value.email, form.value.password, form.value.username, form.value.firstName, form.value.lastName);
   }
 
   ngOnDestroy() {

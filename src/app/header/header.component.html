@@ -14,13 +14,20 @@
     <li *ngIf="!existUser">
       <a mat-button routerLink='/user/register' routerLinkActive="active">Zarejestruj się</a>
     </li>
-    <button *ngIf="existUser" mat-button [matMenuTriggerFor]="menu" style="color:aliceblue">
+    <li>
+      <button *ngIf="existUser" mat-button [matMenuTriggerFor]="menu" style="color:aliceblue">
         {{ this.username }}
       </button>
-    <mat-menu #menu="matMenu">
+    </li>
+    <li>
+      <button *ngIf="existUser" mat-icon-button class="logout" (click)="onLogoff()">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </li>
+    <!-- <mat-menu #menu="matMenu">
       <li *ngIf="existUser">
         <button mat-button (click)="onLogoff()">Wyloguj się</button>
       </li>
-    </mat-menu>
+    </mat-menu> -->
   </ul>
 </mat-toolbar>

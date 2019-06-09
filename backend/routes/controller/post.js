@@ -32,7 +32,7 @@ exports.getPosts = (req, res, next) => {
   const postQuery = Post.find();
   let fetchedPosts;
   if (pageSize && currentPage) {
-    postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize).sort({_id: -1});
   }
   postQuery
     .then(documents => {

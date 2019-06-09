@@ -1,10 +1,10 @@
 <mat-card>
   <form #signup="ngForm" *ngIf="!loader" (submit)="onRegister(signup)">
     <mat-form-field>
-      <input #firstName="ngModel" name="firstName" matInput ngModel type="text" placeholder="Podaj imię">
+      <input #firstName="ngModel" name="firstName" matInput ngModel type="text" placeholder="Podaj imię" firstName required>
     </mat-form-field>
     <mat-form-field>
-      <input #lastName="ngModel" name="lastName" matInput ngModel type="text" placeholder="Podaj nazwisko">
+      <input #lastName="ngModel" name="lastName" matInput ngModel type="text" placeholder="Podaj nazwisko" lastName required>
     </mat-form-field>
     <mat-form-field>
       <input #email="ngModel" name="email" matInput ngModel type="email" autocomplete="off" placeholder="Podaj email" email required>

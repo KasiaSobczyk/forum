@@ -16,6 +16,14 @@ a {
   text-underline-position: under;
 }
 
+.logout {
+  color: white;
+}
+
+:host ::ng-deep mat-icon {
+  margin-bottom: 5px;
+}
+
 .space {
   flex: 1 1 auto;
 }
