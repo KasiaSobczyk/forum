@@ -24,7 +24,6 @@ exports.createMember = (req, res, next) => {
   });
 };
 
-
 exports.loginMember = (req, res, next) => {
   let addedMember;
   Member.findOne({
@@ -32,7 +31,7 @@ exports.loginMember = (req, res, next) => {
     }).then(member => {
       if (!member) {
         return res.status(401).json({
-          message: 'User doesnt exist'
+          message: 'Wybrany użytkownik nie istnieje'
         });
       }
       addedMember = member;
@@ -63,7 +62,7 @@ exports.loginMember = (req, res, next) => {
     })
     .catch(err => {
       return res.status(401).json({
-        message: 'User doesnt exist'
+        message: 'Istnieje użytkownik o takim loginie'
       });
     });
 };

@@ -23,7 +23,7 @@ export class UserSpaceComponent implements OnInit {
         this.memberId = paramMap.get('userId');
         this.loader = true;
         this.userService.getUserInfo(this.memberId).subscribe( res => {
-          console.log(res)
+          // console.log(res)
           this.firstName = res.firstName;
           this.lastName = res.lastName;
           this.username = res.username;
@@ -32,7 +32,6 @@ export class UserSpaceComponent implements OnInit {
         });
       }
     });
-
   }
 
 }

@@ -10,6 +10,7 @@ import { MisstepInterceptor } from './misstep-interceptor';
 import { MisstepComponent } from './misstep/misstep.component';
 import { MaterialDesignModule } from './material-design.module';
 import { PostModule } from './posts/post.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from './home/home.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { HomeComponent } from './home/home.component';
     MaterialDesignModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FlexLayoutModule,
     PostModule
   ],
   providers: [

@@ -1,21 +1,23 @@
-<mat-card>
-  <mat-spinner *ngIf="loader"></mat-spinner>
-  <form (submit)="onSavePost(postForm)" [formGroup]="form" *ngIf="!loader">
-    <mat-form-field>
-      <input matInput type="text" formControlName="title" placeholder="Post Title">
-      <mat-error *ngIf="form.get('title').invalid">Tytuł</mat-error>
-    </mat-form-field>
-    <div>
-      <button mat-stroked-button type="button" color="primary" (click)="chooseFile.click()">Dodaj zdjęcie</button>
-      <input type="file" class="choose-file" #chooseFile (change)="onChooseImage($event)">
-    </div>
-    <div class="preview-img" *ngIf="previewImage && previewImage !== '' && form.get('image').valid">
-      <img [src]="previewImage" alt="form.value.title">
-    </div>
-    <mat-form-field>
-      <textarea matInput rows="4" formControlName="content" placeholder="Post Content"></textarea>
-      <mat-error *ngIf="form.get('content').invalid">Please enter a post title.</mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="accent" type="submit">Zapisz</button>
-  </form>
-</mat-card>
+<div fxLayout="row">
+  <mat-card>
+    <mat-spinner *ngIf="loader"></mat-spinner>
+    <form (submit)="onSavePost(postForm)" [formGroup]="form" *ngIf="!loader">
+      <mat-form-field>
+        <input matInput type="text" formControlName="title" placeholder="Post Title">
+        <mat-error *ngIf="form.get('title').invalid">Tytuł</mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button type="button" color="primary" (click)="chooseFile.click()">Dodaj zdjęcie</button>
+        <input type="file" class="choose-file" #chooseFile (change)="onChooseImage($event)">
+      </div>
+      <div class="preview-img" *ngIf="previewImage && previewImage !== '' && form.get('image').valid">
+        <img [src]="previewImage" alt="form.value.title">
+      </div>
+      <mat-form-field>
+        <textarea matInput rows="4" formControlName="content" placeholder="Post Content"></textarea>
+        <mat-error *ngIf="form.get('content').invalid">Please enter a post title.</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="accent" type="submit">Zapisz</button>
+    </form>
+  </mat-card>
+</div>
