@@ -11,7 +11,7 @@ exports.createPost = (req, res, next) => {
   });
   // console.log("id " + req.memberData.memberId + "user " + req.memberData.username)
   post.save().then(createdPost => {
-    console.log("created " + createdPost);
+    // console.log("created " + createdPost);
     res.status(201).json({
       message: "Post added successfully",
       post: {

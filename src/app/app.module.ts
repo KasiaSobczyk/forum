@@ -12,13 +12,15 @@ import { MaterialDesignModule } from './material-design.module';
 import { PostModule } from './posts/post.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from './home/home.component';
+import { AboutServiceComponent } from './about-service/about-service.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MisstepComponent,
-    HomeComponent
+    HomeComponent,
+    AboutServiceComponent
   ],
   imports: [
     BrowserModule,
