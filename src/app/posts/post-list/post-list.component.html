@@ -1,6 +1,6 @@
 <mat-spinner *ngIf="loader"></mat-spinner>
 <mat-accordion multi="true" *ngIf="posts.length > 0 && !loader">
-  <mat-expansion-panel *ngFor="let post of posts" [expanded]="true">
+  <mat-expansion-panel *ngFor="let post of posts; let i = index" [expanded]="true">
     <mat-expansion-panel-header>
       <div mat-card-avatar class="example-header-image"><img src="/assets/avatars/men.png" alt=""></div>
         <div class="" style="margin-top: 4px">
@@ -20,20 +20,20 @@
     </mat-action-row>
     <mat-card-actions *ngIf="memberId !== post.creator" style="display: flex; justify-content: flex-end">
       <div class="buttons" *ngIf="loggedUser">
-        <button mat-icon-button class="like" (click)="likePost(post.id)">
+        <button mat-icon-button class="like" (click)="likePost(i, post.id)">
           <mat-icon>thumb_up</mat-icon>
         </button>
-        <button mat-icon-button class="dislike" (click)="dislikePost(post.id)">
+        <button mat-icon-button class="dislike" (click)="dislikePost(i, post.id)">
           <mat-icon>thumb_down</mat-icon>
         </button>
         <div class="likesCount">{{ post.likes }}</div>
       </div>
       <div *ngIf="!loggedUser" class="likesCount">Ocena: {{ post.likes }}</div>
     </mat-card-actions>
-    <button mat-button (click)="showComment(post.id)">Pokaż komentarze</button>
+    <button mat-button (click)="switchShowComments(i)">Pokaż komentarze</button>
     <button mat-button (click)="addComment(post.id)" *ngIf="loggedUser">Dodaj komentarz</button>
     <br>
-    <div *ngIf="showComments[0] === post.id">
+    <div *ngIf="post.showComments">
       <!-- nie pokazuje się gdy w innym są otwarte-->
       <p class="info-text mat-body-1" *ngIf="post.comments.length <= 0">Brak komentarzy</p> 
 
@@ -56,7 +56,7 @@
     </div>
     <div *ngIf="addNewComment[0] === post.id">
       <mat-card class="commmnt-form">
-        <form (submit)="onComment(post.id)" [formGroup]="form">
+        <form (submit)="onComment(post.id, i)" [formGroup]="form">
           <mat-form-field>
             <textarea matInput rows="4" formControlName="comment" placeholder="Odpowiedź"></textarea>
             <mat-error>Wprowadź treść</mat-error>

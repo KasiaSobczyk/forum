@@ -13,7 +13,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
   styleUrls: ["./post-list.component.css"]
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  posts: Post[] = [];
+  posts: (Post & { showComments?: boolean })[] = [];
   loader = false;
   loggedUser = false;
   currentPage = 1;
@@ -26,7 +26,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private userStatus: Subscription;
   username: string;
-  likeNumber: number = 0;
+  // likeNumber: number = 0;
   form: FormGroup;
   showComments = [];
   addNewComment = [];
@@ -47,7 +47,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.loader = false;
         this.postAmount = postData.postCount;
         this.posts = postData.posts;
-        this.likeNumber = this.posts[0].likes;
+        // this.likeNumber = this.posts[0].likes;
       });  
     this.loggedUser = this.userService.getAuth();
     this.userStatus = this.userService.getStatus().subscribe(isLogin => {
@@ -78,13 +78,17 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
   }
 
-  showComment(id) {
-    if(this.showComments.includes(id)) {
-      this.showComments.splice(this.showComments.indexOf(id), 1) ;
-    } else {
-      this.showComments.push(id);
-    }
+  switchShowComments(index: number) {
+    this.posts[index].showComments = !this.posts[index].showComments;
   }
+
+  // showComment(id) {
+  //   if(this.showComments.includes(id)) {
+  //     this.showComments.splice(this.showComments.indexOf(id), 1) ;
+  //   } else {
+  //     this.showComments.push(id);
+  //   }
+  // }
 
   addComment(id) {
     if(this.addNewComment.includes(id)) {
@@ -94,39 +98,36 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
   }
  
-  onComment(postId: string){
+  onComment(postId: string, i: number) {
     if (this.form.invalid) {
       return;
     }
     this.loader = true;
     // console.log("id  ",postId)
-    this.postsService.getPost(postId).subscribe(() => {
-      this.postsService.addComment(postId, this.form.value.comment, this.username).subscribe(() => {
+    this.postsService.addComment(postId, this.form.value.comment, this.username).subscribe(() => {
+      this.postsService.getPost(postId).subscribe(() => {
         this.form.reset();
-        this.postsService.getPosts(this.postsPerPage, this.currentPage);
         this.addComment(postId);
-        this.showComment(postId);
+        this.switchShowComments(i);
+      }, () => {}, () => {
+        this.loader = false;
       });
     });
   }
 
-  likePost(postId: string) {
+  likePost(i: number, postId: string) {
     // let like: number;
     this.postsService.getPost(postId).subscribe(() => {
-      this.postsService.likePost(postId, this.likeNumber).subscribe(() => {
+      this.postsService.likePost(postId, this.posts[i].likes).subscribe(() => {
         this.postsService.getPosts(this.postsPerPage, this.currentPage);
-      }, () => {
-        this.loader = false;
       });
     });
   }
 
-  dislikePost(postId: string) {
+  dislikePost(i: number, postId: string) {
     this.postsService.getPost(postId).subscribe(() => {
-      this.postsService.dislikePost(postId, this.likeNumber).subscribe(() => {
+      this.postsService.dislikePost(postId, this.posts[i].likes).subscribe(() => {
         this.postsService.getPosts(this.postsPerPage, this.currentPage);
-      }, () => {
-        this.loader = false;
       });
     });
   }
